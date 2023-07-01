@@ -1,1 +1,32 @@
-
+name: datacomworkflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Install office 365
+        uses: actions/setup-office 365@v1
+      
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:  
+                            
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          TENET_ID: ${{ secrets.AZURE_TENET_ID }}
+          SUBS_ID: ${{ secrets.AZURE_SUBS_ID }}
+      - name: Deploy to Azure
+        uses: azure/active-directory@v2
+        with:
+          app-name: github-actions-demo-1
+          package: app
+      - name: Logout from Azure
+        run: az logout
