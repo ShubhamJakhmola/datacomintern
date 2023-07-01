@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
-      - name: Install office 365
-        uses: actions/setup-office 365@v1
+      - name: Install office365
+        uses: actions/setup-office365@v1
       
   deploy:
     needs: build
